@@ -5,12 +5,10 @@ import kodlama.io.RentACar.business.abstracts.BrandService;
 import kodlama.io.RentACar.business.requests.CreateRequestBrand;
 import kodlama.io.RentACar.business.responses.GetAllBrandsResponse;
 import kodlama.io.RentACar.business.responses.GetByIdBrandResponse;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.service.annotation.PostExchange;
 
 import java.util.List;
 
@@ -22,8 +20,9 @@ public class BrandsController {
     private final BrandService brandService;
 
     @GetMapping("/getAll")
-    public List<GetAllBrandsResponse> getAll(){
-        return this.brandService.getAll();
+    public ResponseEntity<GetAllBrandsResponse> getAll(){
+       List<GetAllBrandsResponse> brand= this.brandService.getAll();
+        return new ResponseEntity<GetAllBrandsResponse>((GetAllBrandsResponse) brand, HttpStatus.OK);
     }
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
@@ -39,5 +38,6 @@ public class BrandsController {
     @GetMapping("/{id}")
     public GetByIdBrandResponse getByIdBrandResponse(@PathVariable int id){
         return brandService.getById(id);
+
     }
 }
