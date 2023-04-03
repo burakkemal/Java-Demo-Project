@@ -9,19 +9,22 @@ import java.util.List;
 
 @Entity
 @RequiredArgsConstructor
-@Table(name = "brands")
+@Table(name = "models")
 @Getter
 @Setter
-public class Brand {
+public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "brand_name")
-    private String brandName;
+    @Column(name = "model_name")
+    private String modelName;
 
-    @OneToMany(mappedBy = "brand")
-    List<Model> models;
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 
+    @OneToMany(mappedBy = "model")
+    List<Car> cars;
 }

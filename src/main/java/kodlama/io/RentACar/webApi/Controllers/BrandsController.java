@@ -1,6 +1,7 @@
 package kodlama.io.RentACar.webApi.Controllers;
 
 
+import jakarta.validation.Valid;
 import kodlama.io.RentACar.business.abstracts.BrandService;
 import kodlama.io.RentACar.business.requests.CreateRequestBrand;
 import kodlama.io.RentACar.business.responses.GetAllBrandsResponse;
@@ -20,13 +21,12 @@ public class BrandsController {
     private final BrandService brandService;
 
     @GetMapping("/getAll")
-    public ResponseEntity<GetAllBrandsResponse> getAll(){
-       List<GetAllBrandsResponse> brand= this.brandService.getAll();
-        return new ResponseEntity<GetAllBrandsResponse>((GetAllBrandsResponse) brand, HttpStatus.OK);
+    public List<GetAllBrandsResponse> getAll(){
+        return brandService.getAll();
     }
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody() CreateRequestBrand createRequestBrand){
+    public void add(@RequestBody() @Valid CreateRequestBrand createRequestBrand){
         brandService.add(createRequestBrand);
     }
 
